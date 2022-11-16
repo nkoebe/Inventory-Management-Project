@@ -36,7 +36,7 @@ public class ModifyPart {
     public TextField partIdTF;
 
     /** The Text Field for the part's name */
-    private TextField partNameTF;
+    public TextField partNameTF;
 
     /** The text field for the part's inventory level */
     public TextField invTF;

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -173,12 +174,8 @@ public class FirstScreen implements Initializable {
      */
     @FXML
     public void onPartsModify(ActionEvent event) throws IOException {
-        boolean isPartSelect = false;
-        if (partsTable.getSelectionModel().getSelectedItem() != null) {
-            isPartSelect = true;
-        }
-
-        if (isPartSelect == true) {
+        try {
+            partsTable.getSelectionModel().getSelectedItem().getId();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
             loader.load();
@@ -196,8 +193,9 @@ public class FirstScreen implements Initializable {
             stage.setTitle("Modify Part form");
             stage.setScene(new Scene(root));
             stage.show();
-        }
-        else {
+
+        } catch(NullPointerException nullPointerException) {
+            System.out.println(nullPointerException);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
             alert.setContentText("Please select a part to modify");
@@ -434,7 +432,7 @@ public class FirstScreen implements Initializable {
         Inventory.addPart(brakes);
         InHouse wheel = new InHouse(2, "Wheel", 11.00, 16, 0, 30, 2);
         Inventory.addPart(wheel);
-        InHouse seat = new InHouse(3, "Seat", 15.000, 10, 0, 20, 3);
+        Outsourced seat = new Outsourced(3, "Seat", 15.000, 10, 0, 20, "Comp");
         Inventory.addPart(seat);
 
         Product giantBike = new Product(1000, "Giant Bike", 299.99, 5, 0, 20);
